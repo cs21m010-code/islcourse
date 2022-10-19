@@ -26,22 +26,22 @@ class cs21m010NN(nn.Module):
         return logits
 
       
-  def get_model(train_data_loader=None, n_epochs=10):
-    model = NeuralNetwork().to(device)
+def get_model(train_data_loader=None, n_epochs=10):
+  model = NeuralNetwork().to(device)
 
-    training_data = datasets.FashionMNIST(
-          root="data",
-          train=True,
-          download=True,
-          transform=ToTensor(),
-      )
-
-    test_data = datasets.FashionMNIST(
-          root="data",
-          train=False,
-          download=True,
-          transform=ToTensor(),
-      )
+  training_data = datasets.FashionMNIST(
+        root="data",
+        train=True,
+        download=True,
+        transform=ToTensor(),
+    )
+  
+  test_data = datasets.FashionMNIST(
+        root="data",
+        train=False,
+        download=True,
+        transform=ToTensor(),
+    )
   
   train_dataloader = DataLoader(training_data, batch_size=batch_size)
   test_dataloader = DataLoader(test_data, batch_size=batch_size)
@@ -99,3 +99,5 @@ class cs21m010NN(nn.Module):
   print ('Returning model... (rollnumber: cs21m010)')       
 
   return model
+
+
