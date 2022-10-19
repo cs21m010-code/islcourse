@@ -108,7 +108,8 @@ def get_model(train_data_loader=None, n_epochs=10):
   return model
 
 def get_model_advanced(train_data_loader=None, n_epochs=10,lr=1e-4,config=None):
-  pass
+ print ('Returning model... (rollnumber: cs21m010)')
+pass
 
 def test_model(model1=None, test_data_loader=None):
   pass
