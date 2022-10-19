@@ -26,8 +26,8 @@ class cs21m010NN(nn.Module):
         return logits
 
       
-      def get_model(train_data_loader=None, n_epochs=10):
-  model = NeuralNetwork().to(device)
+  def get_model(train_data_loader=None, n_epochs=10):
+    model = NeuralNetwork().to(device)
 
   training_data = datasets.FashionMNIST(
         root="data",
