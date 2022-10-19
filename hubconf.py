@@ -12,7 +12,7 @@ classes = ["T-shirt/top","Trouser","Pullover","Dress","Coat","Sandal","Shirt","S
 
 class cs21m010NN(nn.Module):
   def __init__(self):
-        super(NeuralNetwork, self).__init__()
+        super(cs21m010NN, self).__init__()
         self.flatten = nn.Flatten()
         self.linear_relu_stack = nn.Sequential(
             nn.Linear(28*28, 512),
