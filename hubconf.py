@@ -8,6 +8,7 @@ from PIL import Image
 transform_tensor_to_pil = ToPILImage()
 transform_pil_to_tensor = ToTensor()
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
 classes = ["T-shirt/top","Trouser","Pullover","Dress","Coat","Sandal","Shirt","Sneaker","Bag","Ankle boot",]
 
 class cs21m010NN(nn.Module):
