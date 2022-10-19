@@ -11,6 +11,11 @@ transform_pil_to_tensor = ToTensor()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 classes = ["T-shirt/top","Trouser","Pullover","Dress","Coat","Sandal","Shirt","Sneaker","Bag","Ankle boot",]
 
+
+def mithlesh():
+  print ('Mithlesh')
+         
+         
 class cs21m010NN(nn.Module):
   def __init__(self):
         super(cs21m010NN, self).__init__()
