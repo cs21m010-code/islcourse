@@ -44,7 +44,7 @@ def get_model(train_data_loader=None, n_epochs=10):
         download=True,
         transform=ToTensor(),
     )
-  batch_size=4
+  batch_size=128
   train_dataloader = DataLoader(training_data, batch_size=batch_size)
   test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
