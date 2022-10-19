@@ -28,7 +28,7 @@ class cs21m010NN(nn.Module):
 
       
 def get_model(train_data_loader=None, n_epochs=10):
-  model = NeuralNetwork().to(device)
+  model = cs21m010NN().to(device)
 
   training_data = datasets.FashionMNIST(
         root="data",
