@@ -33,6 +33,8 @@ def load_data():
     )
     return training_data, test_data
 
+training_data, test_data = load_data()
+
 def get_model(train_loader,e = 10):
 	model = cs21m001()
 	optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
