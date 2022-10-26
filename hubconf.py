@@ -33,6 +33,34 @@ def load_data():
     )
     return training_data, test_data
 
+def get_model(train_loader,e = 10):
+	model = cs21m001()
+	optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+	criteria = loss_fun
+	train_network(train_loader, optimizer,criteria,e)
+	return model
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using {device} device")
+
+def test(dataloader, model, loss_fn):
+    size = len(dataloader.dataset)
+    num_batches = len(dataloader)
+    model.eval()
+    test_loss, correct = 0, 0
+    with torch.no_grad():
+        for X, y in dataloader:
+            #X, y = X.to(device), y.to(device)
+            tmp = torch.nn.functional.one_hot(y, num_classes= 10)
+            pred = model(X)
+            test_loss += loss_fn(pred, tmp).item()
+            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+    test_loss /= num_batches
+    correct /= size
+    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+
+test(test_loader, model, loss_fun)
+
 
 def create_dataloaders(training_data, test_data, batch_size=64):
 
