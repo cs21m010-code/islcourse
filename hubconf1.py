@@ -7,3 +7,6 @@ from PIL import Image
 
 transform_tensor_to_pil = ToPILImage()
 transform_pil_to_tensor = ToTensor()
+
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
