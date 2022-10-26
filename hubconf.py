@@ -96,3 +96,19 @@ def train_network(train_loader, optimizer,criteria, e):
 
   print('Finished Training')
 
+def loss_fun(y_pred, y_ground):
+  v = -(y_ground * torch.log(y_pred + 0.0001))
+  v = torch.sum(v)
+  return v
+
+x,y = training_data[0]
+model = cs21m010()
+y_pred = model(x)
+print(y_pred.shape)
+print(y_pred)
+print(torch.sum(y_pred))
+#cross_entropy(10,y_pred)
+
+y_ground = y
+loss_val = loss_fun(y_pred, y_ground)
+print(loss_val)
