@@ -55,37 +55,9 @@ def create_dataloaders(training_data, test_data, batch_size=64):
         
     return train_dataloader, test_dataloader
 
+print (len(set([y for x,y in training_data])))
+
 train_loader, test_loader = create_dataloaders(training_data, test_data, batch_size = 32)
-
-def get_model(train_loader,e = 10):
-	model = cs21m001()
-	optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-	criteria = loss_fun
-	train_network(train_loader, optimizer,criteria,e)
-	return model
-
-
-
-def test(dataloader, model, loss_fn):
-    size = len(dataloader.dataset)
-    num_batches = len(dataloader)
-    model.eval()
-    test_loss, correct = 0, 0
-    with torch.no_grad():
-        for X, y in dataloader:
-            #X, y = X.to(device), y.to(device)
-            tmp = torch.nn.functional.one_hot(y, num_classes= 10)
-            pred = model(X)
-            test_loss += loss_fn(pred, tmp).item()
-            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
-    test_loss /= num_batches
-    correct /= size
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
-
-#test(test_loader, model, loss_fun)
-
-
-
 
 class cs21m010(nn.Module):
     def __init__(self):
@@ -98,11 +70,11 @@ class cs21m010(nn.Module):
 
     def forward(self, x):
         x = self.flatten(x)
-        x =  self.linear_relu_stack(x)
-        x=self.sobj(x)
+        x = self.linear_relu_stack(x)
+        x = self.sobj(x)
 
         return x
-    
+	
 y = (len(set([y for x,y in training_data])))
 model = cs21m010()
 
@@ -134,6 +106,7 @@ def train_network(train_loader, optimizer,criteria, e):
 
   print('Finished Training')
 
+#cross entropy
 def loss_fun(y_pred, y_ground):
   v = -(y_ground * torch.log(y_pred + 0.0001))
   v = torch.sum(v)
@@ -150,3 +123,44 @@ print(torch.sum(y_pred))
 y_ground = y
 loss_val = loss_fun(y_pred, y_ground)
 print(loss_val)
+
+#test(test_loader, model, loss_fun)
+#train_network(train_loader,optimizer,loss_fun,10)
+
+#write the get model
+
+def get_model(train_loader,e = 10):
+	model = cs21m010()
+	optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+	criteria = loss_fun
+	train_network(train_loader, optimizer,criteria,e)
+	return model
+
+
+def test(dataloader, model, loss_fn):
+    size = len(dataloader.dataset)
+    num_batches = len(dataloader)
+    model.eval()
+    test_loss, correct = 0, 0
+    with torch.no_grad():
+        for X, y in dataloader:
+            #X, y = X.to(device), y.to(device)
+            tmp = torch.nn.functional.one_hot(y, num_classes= 10)
+            pred = model(X)
+            test_loss += loss_fn(pred, tmp).item()
+            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+    test_loss /= num_batches
+    correct /= size
+    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    accuracy1 = Accuracy()
+    print('Accuracy :', accuracy1(pred,y))
+    precision = Precision(average = 'macro', num_classes = 10)
+    print('precision :', precision(pred,y))
+
+    recall = Recall(average = 'macro', num_classes = 10)
+    print('recall :', recall(pred,y))
+    f1_score = F1Score(average = 'macro', num_classes = 10)
+    print('f1_score :', f1_score(pred,y))
+    return accuracy1, precision, recall, f1_score
+
+
