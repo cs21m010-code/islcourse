@@ -163,4 +163,8 @@ def test(dataloader, model, loss_fn):
     print('f1_score :', f1_score(pred,y))
     return accuracy1, precision, recall, f1_score
 
+test(test_loader, model, loss_fun)
 
+def test_model(model1, test_data_loader):
+	a,p,r,f1 = test(test_data_loader, model1, loss_fun)
+	return a,p,r,f1
