@@ -1,4 +1,4 @@
-pip install torchmetrics
+
 
 import torch
 from torch import nn
@@ -9,7 +9,7 @@ from PIL import Image
 import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
-from torchmetrics import Precision, Recall, F1Score, Accuracy
+
 
 transform_tensor_to_pil = ToPILImage()
 transform_pil_to_tensor = ToTensor()
@@ -138,6 +138,9 @@ def get_model(train_loader,e = 10):
 	train_network(train_loader, optimizer,criteria,e)
 	return model
 
+
+!pip install torchmetrics
+from torchmetrics import Precision, Recall, F1Score, Accuracy
 
 def test(dataloader, model, loss_fn):
     size = len(dataloader.dataset)
