@@ -139,8 +139,8 @@ def get_model(train_loader,e = 10):
 	return model
 
 
-!pip install torchmetrics
-from torchmetrics import Precision, Recall, F1Score, Accuracy
+#!pip install torchmetrics
+#from torchmetrics import Precision, Recall, F1Score, Accuracy
 
 def test(dataloader, model, loss_fn):
     size = len(dataloader.dataset)
