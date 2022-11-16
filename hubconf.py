@@ -7,12 +7,14 @@ from PIL import Image
 import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
+from torchmetrics import Precision, Recall, F1Score, Accuracy
 
 transform_tensor_to_pil = ToPILImage()
 transform_pil_to_tensor = ToTensor()
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using {device} device")
 
 def load_data():
 
@@ -34,6 +36,26 @@ def load_data():
     return training_data, test_data
 
 training_data, test_data = load_data()
+#mod_train_data = ModifiedDataset(training_data)
+#mod_test_data = ModifiedDataset(test_data)
+
+print (training_data[0][0].shape)
+#print (mod_train_data[0][0].shape)
+
+def create_dataloaders(training_data, test_data, batch_size=64):
+
+    # Create data loaders.
+    train_dataloader = DataLoader(training_data, batch_size=batch_size)
+    test_dataloader = DataLoader(test_data, batch_size=batch_size)
+
+    for X, y in test_dataloader:
+        print(f"Shape of X [N, C, H, W]: {X.shape}")
+        print(f"Shape of y: {y.shape} {y.dtype}")
+        break
+        
+    return train_dataloader, test_dataloader
+
+train_loader, test_loader = create_dataloaders(training_data, test_data, batch_size = 32)
 
 def get_model(train_loader,e = 10):
 	model = cs21m001()
@@ -42,8 +64,7 @@ def get_model(train_loader,e = 10):
 	train_network(train_loader, optimizer,criteria,e)
 	return model
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(f"Using {device} device")
+
 
 def test(dataloader, model, loss_fn):
     size = len(dataloader.dataset)
@@ -64,20 +85,7 @@ def test(dataloader, model, loss_fn):
 #test(test_loader, model, loss_fun)
 
 
-def create_dataloaders(training_data, test_data, batch_size=64):
 
-    # Create data loaders.
-    train_dataloader = DataLoader(training_data, batch_size=batch_size)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size)
-
-    for X, y in test_dataloader:
-        print(f"Shape of X [N, C, H, W]: {X.shape}")
-        print(f"Shape of y: {y.shape} {y.dtype}")
-        break
-        
-    return train_dataloader, test_dataloader
-
-train_loader, test_loader = create_dataloaders(training_data, test_data, batch_size = 32)
 
 class cs21m010(nn.Module):
     def __init__(self):
