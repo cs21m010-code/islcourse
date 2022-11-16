@@ -1,4 +1,4 @@
-!pip install torchmetrics
+pip install torchmetrics
 
 import torch
 from torch import nn
