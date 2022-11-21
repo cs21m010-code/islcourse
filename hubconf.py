@@ -14,3 +14,8 @@ def get_data_blobs(n_points=100):
 def get_data_circles(n_points=100):
   X, y = make_circles(n_samples=n_points)
   return X,y
+
+def get_data_mnist():
+  
+  X,y = None
+  return X,y
