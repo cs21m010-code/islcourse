@@ -30,3 +30,10 @@ def build_kmeans(X=None,k=10):
   km = KMeans(n_clusters=k)
   km.fit(X)
   return km
+
+def assign_kmeans(km=None,X=None):
+  # For each of the points in X, assign one of the means
+  # refer to predict() function of the KMeans in sklearn
+  # write your code ...
+  ypred = km.predict(X)
+  return ypred
