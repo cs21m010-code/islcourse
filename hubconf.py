@@ -148,7 +148,7 @@ class cs21m010NN(nn.Module):
     
     return y_pred, x_dec
 
-  def loss_fn(self,x,yground,y_pred,xencdec):
+def loss_fn(self,x,yground,y_pred,xencdec):
       tmp = Fun.one_hot(yground, num_classes= self.num_classes).to(device)
       y_pred , tmp = y_pred.to(device) , tmp.to(device)
       v = -(tmp * torch.log(y_pred + 0.0001))
