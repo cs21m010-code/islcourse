@@ -47,24 +47,47 @@ def compare_clusterings(ypred_1,ypred_2):
 
 ###### PART 2 ##########
 
-def build_lr_model(X, y):
-  lr_model = LogisticRegression(random_state=0).fit(X, y)
+def build_lr_model(X=None, y=None):
+  lr_model = LogisticRegression()
+  if X.ndim > 2:
+      n_samples = len(X)
+      X= X.reshape((n_samples, -1))
+  lr_model.fit(X,y)
   return lr_model
 
-def build_rf_model(X, y):
-  rf_model=RandomForestClassifier(max_depth=4, random_state=0)
+def build_rf_model(X=None, y=None):
+  rf_model = RandomForestClassifier()
+  if X.ndim > 2:
+      n_samples = len(X)
+      X= X.reshape((n_samples, -1))
+  rf_model.fit(X,y)
   return rf_model
 
-def get_metrics(model,X,y):
-  X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=2,stratify=y)
-  model.fit(X_train,y_train)
-  
-  y_pred_test = model.predict(X_test)
-  acc=accuracy_score(y_test, y_pred_test)
-  rec=recall_score(y_test,y_pred_test)
-  prec=precision_score(y_test,y_pred_test)
-  f1=f1_score(y_test,y_pred_test)
-  auc=roc_auc_score(y_test,y_pred_test)
+def get_metrics(model=None,X=None,y=None):
+  if X.ndim > 2:
+      n_samples = len(X)
+      X= X.reshape((n_samples, -1))
+  classes = set()
+  for i in y:
+      classes.add(i)
+  num_classes = len(classes)
+
+  ypred = model.predict(X)
+  acc, prec, rec, f1, auc = 0,0,0,0,0
+  acc = accuracy_score(y,ypred)
+  if num_classes == 2:
+    prec = precision_score(y,ypred)
+    recall = recall_score(y,ypred)
+    f1 = f1_score(y,ypred)
+    auc = roc_auc_score(y,ypred)
+
+  else:
+    prec = precision_score(y,ypred,average='macro')
+    recall = recall_score(y,ypred,average='macro')
+    f1 = f1_score(y,ypred,average='macro')
+    pred_prob = model.predict_proba(X)
+    roc_auc_score(y, pred_prob, multi_class='ovr')
+
   return acc, prec, rec, f1, auc
 
 def get_paramgrid_lr():
@@ -74,6 +97,7 @@ def get_paramgrid_lr():
 def get_paramgrid_rf():
   rf_param_grid = { 'n_estimators' : [1,10,100],'criterion' :["gini", "entropy"], 'max_depth' : [1,10,None]  }
   return rf_param_grid
+
 
 def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
   top1_scores = []
