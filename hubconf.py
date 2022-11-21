@@ -74,3 +74,8 @@ def get_paramgrid_lr():
 def get_paramgrid_rf():
   rf_param_grid = { 'n_estimators' : [1,10,100],'criterion' :["gini", "entropy"], 'max_depth' : [1,10,None]  }
   return rf_param_grid
+
+def perform_gridsearch_cv_multimetric(model1=None, param_grid=None, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
+  grid_search_cv = None
+  top1_scores = []
+  return top1_scores
