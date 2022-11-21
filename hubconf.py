@@ -32,11 +32,11 @@ def build_kmeans(X=None,k=10):
   km = KMeans(n_clusters=k).fit(X)
   return km
 
-def assign_kmeans(km=None,X=None):
+def assign_kmeans(km,X):
   ypred = km.predict(X)
   return ypred
 
-def compare_clusterings(ypred_1=None,ypred_2=None):
+def compare_clusterings(ypred_1,ypred_2):
   h = homogeneity_score(ypred_1,ypred_2)
   c = completeness_score(ypred_1,ypred_2)
   v = v_measure_score(ypred_1,ypred_2)
@@ -44,3 +44,7 @@ def compare_clusterings(ypred_1=None,ypred_2=None):
 
 ###### PART 2 ##########
 
+
+def build_lr_model(X=None, y=None):
+  lr_model = None
+  return lr_model
