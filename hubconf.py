@@ -37,8 +37,10 @@ def assign_kmeans(km=None,X=None):
   return ypred
 
 def compare_clusterings(ypred_1=None,ypred_2=None):
-  h,c,v = 0,0,0
   h = homogeneity_score(ypred_1,ypred_2)
   c = completeness_score(ypred_1,ypred_2)
   v = v_measure_score(ypred_1,ypred_2)
   return h,c,v
+
+###### PART 2 ##########
+
