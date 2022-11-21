@@ -24,7 +24,9 @@ def get_data_circles(n_points=100):
 
 def get_data_mnist():
   digits = load_digits(n_class=10, return_X_y=False, as_frame=False)
-  return digits
+  X = digits.data
+  y = digits.target
+  return X,y
 
 def build_kmeans(X=None,k=10):
   km = KMeans(n_clusters=k)
