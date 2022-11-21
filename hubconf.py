@@ -75,9 +75,10 @@ def get_paramgrid_rf():
   rf_param_grid = { 'n_estimators' : [1,10,100],'criterion' :["gini", "entropy"], 'max_depth' : [1,10,None]  }
   return rf_param_grid
 
-def perform_gridsearch_cv_multimetric(model1=None, param_grid=None, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
+def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
   top1_scores = []
-    if X.ndim > 2:
+  
+  if X.ndim > 2:
       n_samples = len(X)
       X= X.reshape((n_samples, -1))
       
@@ -85,6 +86,7 @@ def perform_gridsearch_cv_multimetric(model1=None, param_grid=None, cv=5, X=None
       grid_search_cv = GridSearchCV(model,param_grid,scoring = score,cv=cv)
       grid_search_cv.fit(X,y)
       top1_scores.append(grid_search_cv.best_estimator_.get_params())
+      
   return top1_scores
 
 ####### PART 3 #################
