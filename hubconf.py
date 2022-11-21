@@ -66,3 +66,11 @@ def get_metrics(model,X,y):
   f1=f1_score(y_test,y_pred_test)
   auc=roc_auc_score(y_test,y_pred_test)
   return acc, prec, rec, f1, auc
+
+def get_paramgrid_lr():
+  lr_param_grid = {'penalty' : ['l1','l2']}
+  return lr_param_grid
+
+def get_paramgrid_rf():
+  rf_param_grid = { 'n_estimators' : [1,10,100],'criterion' :["gini", "entropy"], 'max_depth' : [1,10,None]  }
+  return rf_param_grid
