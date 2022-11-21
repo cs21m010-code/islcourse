@@ -16,7 +16,7 @@ def get_data_circles(n_points=100):
   return X,y
 
 def get_data_mnist():
-  digits = load_digits(*, n_class=10, return_X_y=False, as_frame=False)
+  digits = load_digits(n_class=10, return_X_y=False, as_frame=False)
   return digits
 
 def build_kmeans(X=None,k=10):
