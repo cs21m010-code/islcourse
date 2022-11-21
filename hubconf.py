@@ -114,3 +114,22 @@ def perform_gridsearch_cv_multimetric(model, param_grid, cv=5, X=None, y=None, m
   return top1_scores
 
 ####### PART 3 #################
+
+class cs21m010NN(nn.Module):
+  def __init__(self,inp_dim=64,hid_dim=13,num_classes=10):
+    super(cs21m010NN,self).__init__()
+    self.fc_encoder = nn.Linear(inp_dim, hid_dim)
+    self.fc_decoder = nn.Linear(hid_dim, inp_dim)
+    self.fc_classifier = nn.Linear(hid_dim, num_classes)
+    self.relu = nn.ReLU()
+    self.softmax = nn.Softmax(dim=1) 
+
+  def forward(self,x):
+    x = nn.Flatten()
+    x_enc = self.fc_encoder(x)
+    x_enc = self.relu(x_enc)
+    y_pred = self.fc_classifier(x_enc)
+    y_pred = self.softmax(y_pred)
+    x_dec = self.fc_decoder(x_enc)
+    
+    return y_pred, x_dec
