@@ -45,6 +45,10 @@ def compare_clusterings(ypred_1,ypred_2):
 ###### PART 2 ##########
 
 
-def build_lr_model(X,y):
-  lr_model = None
+def build_lr_model(X, y):
+  lr_model = LogisticRegression(random_state=0).fit(X, y)
   return lr_model
+
+def build_rf_model(X, y):
+  rf_model=RandomForestClassifier(max_depth=4, random_state=0)
+  return rf_model
