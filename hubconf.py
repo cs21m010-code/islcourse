@@ -116,6 +116,9 @@ def perform_gridsearch_cv_multimetric(model, param_grid, cv=5, X=None, y=None, m
 
 ####### PART 3 #################
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+
 class cs21m010NN(nn.Module):
   def __init__(self,inp_dim=64,hid_dim=13,num_classes=10):
     super(cs21m010NN,self).__init__()
@@ -134,3 +137,20 @@ class cs21m010NN(nn.Module):
     x_dec = self.fc_decoder(x_enc)
     
     return y_pred, x_dec
+
+  def loss_fn(self,x,yground,y_pred,xencdec):
+      tmp = Fun.one_hot(yground, num_classes= self.num_classes).to(device)
+      y_pred , tmp = y_pred.to(device) , tmp.to(device)
+      v = -(tmp * torch.log(y_pred + 0.0001))
+      lc1 = torch.mean(v)
+      
+      if x.ndim > 2:
+          flat = nn.Flatten()
+          x = flat(x)
+      else:
+          flat = nn.Flatten(start_dim=0)
+          x = flat(x)
+      
+      lc2 = torch.mean((x - xencdec)**2)
+      lval = lc1 + lc2
+      return lval
