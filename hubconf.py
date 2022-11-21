@@ -17,5 +17,5 @@ def get_data_circles(n_points=100):
 
 def get_data_mnist():
   
-  X,y = None
+  X,y = load_digits(*, n_class=10, return_X_y=False, as_frame=False)
   return X,y
