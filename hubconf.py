@@ -99,7 +99,7 @@ def get_paramgrid_rf():
   return rf_param_grid
 
 
-def perform_gridsearch_cv_multimetric(model, param_grid=None, cv=5, X, y, metrics=['accuracy','roc_auc']):
+def perform_gridsearch_cv_multimetric(model, param_grid, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
   top1_scores = []
   
   if X.ndim > 2:
