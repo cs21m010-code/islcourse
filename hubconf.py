@@ -47,7 +47,7 @@ def compare_clusterings(ypred_1,ypred_2):
 
 ###### PART 2 ##########
 
-def build_lr_model(X=None, y=None):
+def build_lr_model(X,y):
   lr_model = LogisticRegression()
   if X.ndim > 2:
       n_samples = len(X)
@@ -55,7 +55,7 @@ def build_lr_model(X=None, y=None):
   lr_model.fit(X,y)
   return lr_model
 
-def build_rf_model(X=None, y=None):
+def build_rf_model(X,y):
   rf_model = RandomForestClassifier()
   if X.ndim > 2:
       n_samples = len(X)
@@ -63,7 +63,7 @@ def build_rf_model(X=None, y=None):
   rf_model.fit(X,y)
   return rf_model
 
-def get_metrics(model=None,X=None,y=None):
+def get_metrics(model,X,y):
   if X.ndim > 2:
       n_samples = len(X)
       X= X.reshape((n_samples, -1))
@@ -99,7 +99,7 @@ def get_paramgrid_rf():
   return rf_param_grid
 
 
-def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None, y=None, metrics=['accuracy','roc_auc']):
+def perform_gridsearch_cv_multimetric(model, param_grid=None, cv=5, X, y, metrics=['accuracy','roc_auc']):
   top1_scores = []
   
   if X.ndim > 2:
