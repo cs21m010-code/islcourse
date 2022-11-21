@@ -10,3 +10,7 @@ from sklearn.datasets import make_blobs, make_circles, load_digits
 def get_data_blobs(n_points=100):
   X, y = make_blobs(n_samples=n_points)
   return X,y
+
+def get_data_circles(n_points=100):
+  X, y = make_circles(n_samples=n_points)
+  return X,y
