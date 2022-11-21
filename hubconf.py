@@ -48,13 +48,33 @@ def compare_clusterings(ypred_1,ypred_2):
 
 ###### PART 2 ##########
 
-def build_lr_model(X,y):
-  lr_model = LogisticRegression()
-  if X.ndim > 2:
-      n_samples = len(X)
-      X= X.reshape((n_samples, -1))
-  lr_model.fit(X,y)
+def build_lr_model(X, y):
+  lr_model = LogisticRegression().fit(X, y)
   return lr_model
+
+def build_rf_model(X, y):
+  rf_model=RandomForestClassifier()
+  rf_model.fit(X, y)
+  
+  return rf_model
+
+def get_metrics(model1,X,y):
+  
+  y_test=y
+  y_pred_test = model1.predict(X)
+  
+  acc=accuracy_score(y_test, y_pred_test)
+  # print(acc)
+  rec=recall_score(y_test,y_pred_test,average='macro')
+  #print(rec)
+  prec=precision_score(y_test,y_pred_test,average='macro')
+  #print(prec)
+  f1=f1_score(y_test,y_pred_test,average='macro')
+  
+  fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred_test, pos_label=2)
+  auc = metrics.auc(fpr, tpr)
+  
+  return acc, prec, rec, f1, auc
 
 def build_rf_model(X,y):
   rf_model = RandomForestClassifier()
