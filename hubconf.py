@@ -60,3 +60,31 @@ def build_rf_model(X=None, y=None):
       X= X.reshape((n_samples, -1))
   rf_model.fit(X,y)
   return rf_model
+
+def get_metrics(model=None,X=None,y=None):
+  if X.ndim > 2:
+      n_samples = len(X)
+      X= X.reshape((n_samples, -1))
+  classes = set()
+  for i in y:
+      classes.add(i)
+  num_classes = len(classes)
+
+  ypred = model.predict(X)
+  acc, prec, rec, f1, auc = 0,0,0,0,0
+  
+  acc = accuracy_score(y,ypred)
+  if num_classes == 2:
+    prec = precision_score(y,ypred)
+    recall = recall_score(y,ypred)
+    f1 = f1_score(y,ypred)
+    auc = roc_auc_score(y,ypred)
+
+  else:
+    prec = precision_score(y,ypred,average='macro')
+    recall = recall_score(y,ypred,average='macro')
+    f1 = f1_score(y,ypred,average='macro')
+    pred_prob = model.predict_proba(X)
+    roc_auc_score(y, pred_prob, multi_class='ovr')
+
+  return acc, prec, rec, f1, 
