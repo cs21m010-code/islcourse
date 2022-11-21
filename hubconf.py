@@ -45,6 +45,6 @@ def compare_clusterings(ypred_1,ypred_2):
 ###### PART 2 ##########
 
 
-def build_lr_model(X=None, y=None):
+def build_lr_model(X,y):
   lr_model = None
   return lr_model
