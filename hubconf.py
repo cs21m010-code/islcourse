@@ -122,18 +122,28 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 class cs21m010NN(nn.Module):
   def __init__(self,inp_dim=64,hid_dim=13,num_classes=10):
     super(cs21m010NN,self).__init__()
-    self.fc_encoder = nn.Linear(inp_dim, hid_dim)
-    self.fc_decoder = nn.Linear(hid_dim, inp_dim)
-    self.fc_classifier = nn.Linear(hid_dim, num_classes)
+    self.num_classes = num_classes
+    self.fc_encoder = nn.Linear(inp_dim,hid_dim).to(device)
+    self.fc_decoder = nn.Linear(hid_dim,inp_dim).to(device)
+    self.fc_classifier = nn.Linear(hid_dim,num_classes).to(device) 
+    
     self.relu = nn.ReLU()
-    self.softmax = nn.Softmax(dim=1) 
+    self.softmax = nn.Softmax()
 
   def forward(self,x):
-    x = nn.Flatten()
+    if x.ndim > 2:
+        flat = nn.Flatten()
+        x = flat(x) # write your code - flatten x
+    else:
+        flat = nn.Flatten(start_dim=0)
+        x = flat(x)
+
     x_enc = self.fc_encoder(x)
     x_enc = self.relu(x_enc)
+    
     y_pred = self.fc_classifier(x_enc)
     y_pred = self.softmax(y_pred)
+    
     x_dec = self.fc_decoder(x_enc)
     
     return y_pred, x_dec
