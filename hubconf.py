@@ -79,3 +79,5 @@ def perform_gridsearch_cv_multimetric(model1=None, param_grid=None, cv=5, X=None
   grid_search_cv = None
   top1_scores = []
   return top1_scores
+
+####### PART 3 #################
