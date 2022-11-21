@@ -32,8 +32,12 @@ def build_kmeans(X=None,k=10):
   return km
 
 def assign_kmeans(km=None,X=None):
-  # For each of the points in X, assign one of the means
-  # refer to predict() function of the KMeans in sklearn
-  # write your code ...
   ypred = km.predict(X)
   return ypred
+
+def compare_clusterings(ypred_1=None,ypred_2=None):
+  h,c,v = 0,0,0
+  h = homogeneity_score(ypred_1,ypred_2)
+  c = completeness_score(ypred_1,ypred_2)
+  v = v_measure_score(ypred_1,ypred_2)
+  return h,c,v
